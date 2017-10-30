@@ -1,0 +1,23 @@
+---
+- name: Add LLVM APT key
+  apt_key:
+    url: https://apt.llvm.org/llvm-snapshot.gpg.key
+    state: present
+
+- name: Add LLVM APT repository
+  apt_repository:
+    repo: deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-5.0 main
+    state: present
+    update_cache: yes
+
+- name: Install Clang 5.0
+  apt:
+    name: clang-5.0
+    state: present
+
+- name: Set clang as default C compiler
+  copy:
+    src: set-clang-cc.sh
+    dest: /etc/profile.d
+  when: set_clang_cc
+
