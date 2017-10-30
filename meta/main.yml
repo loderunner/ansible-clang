@@ -8,14 +8,14 @@ galaxy_info:
     - name: Ubuntu
       versions:
         - trusty
-          xenial
-          zesty
-          artful
+        - xenial
+        - zesty
+        - artful
     - name: Debian
       versions:
         - jessie
-          stretch
-          sid
+        - stretch
+        - sid
   categories:
     - development
 dependencies: []
