@@ -1,7 +1,4 @@
-Clang
-
-![](https://img.shields.io/ansible/role/d/21596.svg)
-
+Clang [![Ansible Role](https://img.shields.io/ansible/role/d/21596.svg)](https://galaxy.ansible.com/loderunner/clang/)
 =====
 
 Ansible role that installs [Clang](https://clang.llvm.org/) to Ubuntu or Debian.
