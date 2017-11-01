@@ -1,73 +1,41 @@
 ---
+
+- name: Include platform-specific variables
+  include_vars: "vars/{{ ansible_distribution }}-{{ ansible_distribution_release }}-{{ clang_version }}.yml"
+
 - name: Add LLVM APT key
   apt_key:
     url: https://apt.llvm.org/llvm-snapshot.gpg.key
     state: present
 
-- name: Add LLVM APT repository (Debian Jessie)
+- name: Add LLVM APT repository
   apt_repository:
-    repo: deb http://apt.llvm.org/jessie/ llvm-toolchain-jessie-5.0 main
+    repo: "{{ llvm_apt_repo }}"
     state: present
     update_cache: yes
-  when: ansible_distribution == "Debian" and ansible_distribution_release == "jessie"
 
-- name: Add LLVM APT repository (Debian Stretch)
-  apt_repository:
-    repo: deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-5.0 main
+- name: Add APT key for libstdc++ (Ubuntu Trusty)
+  apt_key:
+    keyserver: "keyserver.ubuntu.com"
+    id: 1E9377A2BA9EF27F
     state: present
-    update_cache: yes
-  when: ansible_distribution == "Debian" and ansible_distribution_release == "stretch"
-
-- name: Add LLVM APT repository (Debian Sid)
-  apt_repository:
-    repo: deb http://apt.llvm.org/unstable/ llvm-toolchain-unstable-5.0 main
-    state: present
-    update_cache: yes
-  when: ansible_distribution == "Debian" and ansible_distribution_release == "sid"
-
-- name: Add LLVM APT repository (Ubuntu Trusty)
-  apt_repository:
-    repo: deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-5.0 main
-    state: present
-    update_cache: yes
   when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty"
 
-- name: Add repository for libstdc++ (Ubuntu Trusty)
+- name: Add APT repository for libstdc++ (Ubuntu Trusty)
   apt_repository:
     repo: deb http://ppa.launchpad.net/ubuntu-toolchain-r/test/ubuntu trusty main
     state: present
     update_cache: yes
   when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty"
 
-- name: Add LLVM APT repository (Ubuntu Xenial)
-  apt_repository:
-    repo: deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-5.0 main
-    state: present
-    update_cache: yes
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "trusty"
-
-- name: Add LLVM APT repository (Ubuntu Zesty)
-  apt_repository:
-    repo: deb http://apt.llvm.org/zesty/ llvm-toolchain-zesty-5.0 main
-    state: present
-    update_cache: yes
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "zesty"
-
-- name: Add LLVM APT repository (Ubuntu Artful)
-  apt_repository:
-    repo: deb http://apt.llvm.org/artful/ llvm-toolchain-artful-5.0 main
-    state: present
-    update_cache: yes
-  when: ansible_distribution == "Ubuntu" and ansible_distribution_release == "artful"
-
-- name: Install Clang 5.0
+- name: Install Clang
   apt:
-    name: clang-5.0
+    name: clang-{{ clang_version }}
     state: present
 
 - name: Set clang as default C compiler
   copy:
-    src: set-clang-cc.sh
-    dest: /etc/profile.d
+    content: export CC=clang-{{ clang_version }}
+    dest: /etc/profile.d/set-clang-cc.sh
   when: set_clang_cc
 
