@@ -1,2 +1,2 @@
 ---
-llvm_apt_repo: deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial main
+llvm_apt_repo: deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-6.0 main
