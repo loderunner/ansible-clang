@@ -3,8 +3,6 @@ sudo: required
 services:
   - docker
 
-language: generic
-
 before_install:
 - echo FROM $(echo $TEST_PLATFORM | tr A-Z a-z):$TEST_RELEASE > Dockerfile
 - cat .travis/Dockerfile-$TEST_PLATFORM >> Dockerfile
