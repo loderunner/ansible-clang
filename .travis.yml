@@ -33,6 +33,12 @@ script:
 jobs:
   include:
     - stage: deploy
+      addons:
+        apt:
+          sources:
+            - sourceline: ppa:ansible/ansible
+          packages:
+          - ansible
       env:
         secure: uYNXzfMFIpHaEGXSMYQ0333sDRwOzHH8HZOZkUcIl65Y3qo0UEVZXR8EnoID2xr9qsuFkafQyRq3pcnm1doXFFkxNR5FT5+n2vz9Hde5R8py67Ws3zb+gMyX16hS7dXj/KHgPVNL0DMJ8UHPl5wW34UNUhH8U3DCVwvhlbqpmUgYACyh8cPBqwE32cuY0D+fNuo4cRcLqX69tJdxpQFGhP8/APGMvqGaRjYg3S1QVXH5xbQTmCBvIV1xbvoTn5qGPHl8kDcmGXFU0Th2QQ3TjBS2sLy6foHqnELvMhJqnEB84UNphyrLifq0dkg+IdAObXFDUXcFbkqa2VmqG9fyWv2ZVHG7HhGvOm7fbJJP1Yz9pnritXAYYsO12Ec0ZzcERcU7y793Zq7v1vDZf6fWiMfxlBijzo0gx3vhIrokn1S21pfEd/J8vwDA+P+kIsBH8caIHlZgG+5GEJQ1QJJCjF0EX1Uu0U6s0Dli6nyp28KaQlfAQEirWNLIA6oGpaX720n/BaNSnf+7z1G6TF7gQS96QVWf+3GVXCoLwopbduomSOAw6WoPJAS3wn45LV32NxqbZv8p59AcTGRmEsKsWAs+EHfKz4S+2Fh5GKij/z51QIY1QnFu9oQvh22jSDIkUaVgCY13qL+fA0m/+a9C+3wxhsHhGYz8eYwVeu1QSlQ=
       script: ansible-galaxy login --github-token=$GITHUB_TOKEN && ansible-galaxy import
