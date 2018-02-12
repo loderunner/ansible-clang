@@ -6,7 +6,7 @@ Ansible role that installs [Clang](https://clang.llvm.org/) to Ubuntu or Debian.
 Role Variables
 --------------
 
-`clang_version`: Which version of Clang to install. Possible values: `6.0`, `5.0`, `4.0`. Default is `6.0`.
+`clang_version`: Which version of Clang to install. Possible values: `5.0`, `6.0`, `7.0`. Default is `7.0`.
 
 `set_clang_cc`: Whether or not to set Clang as the default C compiler, using the `CC` environment variable for all users. The default is `false`.
 

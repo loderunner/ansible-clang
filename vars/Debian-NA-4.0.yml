@@ -1,2 +1,0 @@
----
-llvm_apt_repo: deb http://apt.llvm.org/unstable/ llvm-toolchain-4.0 main
