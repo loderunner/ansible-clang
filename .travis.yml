@@ -2,36 +2,41 @@ language: generic
 sudo: required
 services:
 - docker
-before_install:
-- echo FROM $(echo $TEST_PLATFORM | tr A-Z a-z):$TEST_RELEASE > Dockerfile
-- cat .travis/Dockerfile-$TEST_PLATFORM >> Dockerfile
-- docker build -t ansible-clang-$TEST_RELEASE .
-script:
-- docker run --mount type=bind,source=$PWD,destination=/tmp/ansible-clang -w=/tmp/ansible-clang/.travis
-  ansible-clang-$TEST_RELEASE ansible-playbook playbook.yml
 env:
-  matrix:
-  - TEST_PLATFORM=Debian TEST_RELEASE=stretch CLANG_VERSION=5.0
-  - TEST_PLATFORM=Debian TEST_RELEASE=stretch CLANG_VERSION=6.0
-  - TEST_PLATFORM=Debian TEST_RELEASE=stretch CLANG_VERSION=7
-  - TEST_PLATFORM=Debian TEST_RELEASE=sid CLANG_VERSION=5.0
-  - TEST_PLATFORM=Debian TEST_RELEASE=sid CLANG_VERSION=6.0
-  - TEST_PLATFORM=Debian TEST_RELEASE=sid CLANG_VERSION=7
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=trusty CLANG_VERSION=5.0
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=trusty CLANG_VERSION=6.0
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=trusty CLANG_VERSION=7
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=xenial CLANG_VERSION=5.0
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=xenial CLANG_VERSION=6.0
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=xenial CLANG_VERSION=7
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=5.0
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=6.0
-  - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=7
   global:
     secure: uYNXzfMFIpHaEGXSMYQ0333sDRwOzHH8HZOZkUcIl65Y3qo0UEVZXR8EnoID2xr9qsuFkafQyRq3pcnm1doXFFkxNR5FT5+n2vz9Hde5R8py67Ws3zb+gMyX16hS7dXj/KHgPVNL0DMJ8UHPl5wW34UNUhH8U3DCVwvhlbqpmUgYACyh8cPBqwE32cuY0D+fNuo4cRcLqX69tJdxpQFGhP8/APGMvqGaRjYg3S1QVXH5xbQTmCBvIV1xbvoTn5qGPHl8kDcmGXFU0Th2QQ3TjBS2sLy6foHqnELvMhJqnEB84UNphyrLifq0dkg+IdAObXFDUXcFbkqa2VmqG9fyWv2ZVHG7HhGvOm7fbJJP1Yz9pnritXAYYsO12Ec0ZzcERcU7y793Zq7v1vDZf6fWiMfxlBijzo0gx3vhIrokn1S21pfEd/J8vwDA+P+kIsBH8caIHlZgG+5GEJQ1QJJCjF0EX1Uu0U6s0Dli6nyp28KaQlfAQEirWNLIA6oGpaX720n/BaNSnf+7z1G6TF7gQS96QVWf+3GVXCoLwopbduomSOAw6WoPJAS3wn45LV32NxqbZv8p59AcTGRmEsKsWAs+EHfKz4S+2Fh5GKij/z51QIY1QnFu9oQvh22jSDIkUaVgCY13qL+fA0m/+a9C+3wxhsHhGYz8eYwVeu1QSlQ=
-deploy:
-  provider: script
-  script: ansible-galaxy login --github-token=$GITHUB_TOKEN && ansible-galaxy import
-    loderunner ansible-clang
-  on:
-    repo: loderunner/ansible-clang
-    branch: master
+jobs:
+  include:
+    - stage: test
+      before_install:
+      - echo FROM $(echo $TEST_PLATFORM | tr A-Z a-z):$TEST_RELEASE > Dockerfile
+      - cat .travis/Dockerfile-$TEST_PLATFORM >> Dockerfile
+      - docker build -t ansible-clang-$TEST_RELEASE .
+      script:
+      - docker run --mount type=bind,source=$PWD,destination=/tmp/ansible-clang -w=/tmp/ansible-clang/.travis
+        ansible-clang-$TEST_RELEASE ansible-playbook playbook.yml
+      env:
+        matrix:
+        - TEST_PLATFORM=Debian TEST_RELEASE=stretch CLANG_VERSION=5.0
+        - TEST_PLATFORM=Debian TEST_RELEASE=stretch CLANG_VERSION=6.0
+        - TEST_PLATFORM=Debian TEST_RELEASE=stretch CLANG_VERSION=7
+        - TEST_PLATFORM=Debian TEST_RELEASE=sid CLANG_VERSION=5.0
+        - TEST_PLATFORM=Debian TEST_RELEASE=sid CLANG_VERSION=6.0
+        - TEST_PLATFORM=Debian TEST_RELEASE=sid CLANG_VERSION=7
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=trusty CLANG_VERSION=5.0
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=trusty CLANG_VERSION=6.0
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=trusty CLANG_VERSION=7
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=xenial CLANG_VERSION=5.0
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=xenial CLANG_VERSION=6.0
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=xenial CLANG_VERSION=7
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=5.0
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=6.0
+        - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=7
+    - stage: deploy
+      deploy:
+        provider: script
+        script: ansible-galaxy login --github-token=$GITHUB_TOKEN && ansible-galaxy import
+          loderunner ansible-clang
+        on:
+          repo: loderunner/ansible-clang
+          branch: master
