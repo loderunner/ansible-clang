@@ -23,13 +23,13 @@ env:
   - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=6.0
   - TEST_PLATFORM=Ubuntu TEST_RELEASE=artful CLANG_VERSION=7
 
-before_install:
+script:
 - echo FROM $(echo $TEST_PLATFORM | tr A-Z a-z):$TEST_RELEASE > Dockerfile
 - cat .travis/Dockerfile-$TEST_PLATFORM >> Dockerfile
 - docker build -t ansible-clang-$TEST_RELEASE .
-script:
 - docker run --mount type=bind,source=$PWD,destination=/tmp/ansible-clang -w=/tmp/ansible-clang/.travis
   ansible-clang-$TEST_RELEASE ansible-playbook playbook.yml
+
 jobs:
   include:
     - stage: deploy
