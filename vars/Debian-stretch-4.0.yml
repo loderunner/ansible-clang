@@ -1,2 +1,0 @@
----
-llvm_apt_repo: deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-4.0 main

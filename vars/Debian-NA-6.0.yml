@@ -1,2 +1,2 @@
 ---
-llvm_apt_repo: deb http://apt.llvm.org/unstable/ llvm-toolchain main
+llvm_apt_repo: deb http://apt.llvm.org/unstable/ llvm-toolchain-6.0 main

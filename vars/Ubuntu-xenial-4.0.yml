@@ -1,2 +1,0 @@
----
-llvm_apt_repo: deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-4.0 main

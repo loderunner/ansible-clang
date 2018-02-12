@@ -1,2 +1,0 @@
----
-llvm_apt_repo: deb http://apt.llvm.org/zesty/ llvm-toolchain-zesty-4.0 main

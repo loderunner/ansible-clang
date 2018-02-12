@@ -1,2 +1,2 @@
 ---
-llvm_apt_repo: deb http://apt.llvm.org/zesty/ llvm-toolchain-zesty main
+llvm_apt_repo: deb http://apt.llvm.org/zesty/ llvm-toolchain-zesty-6.0 main

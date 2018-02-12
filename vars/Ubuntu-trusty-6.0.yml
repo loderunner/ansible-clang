@@ -1,2 +1,2 @@
 ---
-llvm_apt_repo: deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty main
+llvm_apt_repo: deb http://apt.llvm.org/trusty/ llvm-toolchain-trusty-6.0 main

@@ -1,2 +1,2 @@
 ---
-llvm_apt_repo: deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch main
+llvm_apt_repo: deb http://apt.llvm.org/stretch/ llvm-toolchain-stretch-6.0 main
