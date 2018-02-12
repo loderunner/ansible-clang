@@ -17,6 +17,6 @@ galaxy_info:
         - jessie
         - stretch
         - sid
-  categories:
+  galaxy_tags:
     - development
 dependencies: []
