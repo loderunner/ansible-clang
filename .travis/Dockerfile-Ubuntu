@@ -1,0 +1,12 @@
+WORKDIR /tmp
+
+# Install ansible
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends curl python2.7 software-properties-common
+RUN curl -L https://bootstrap.pypa.io/get-pip.py | python -
+RUN pip install urllib3 pyOpenSSL ndg-httpsclient pyasn1
+RUN apt-add-repository ppa:ansible/ansible
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends ansible
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
